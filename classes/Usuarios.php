@@ -39,12 +39,31 @@
         }
         public static function getList(){
             $sql = new Sql();
-            return $sql->select("SELECT * FROM alunos ORDER BY nome DESC");
+            return $sql->select("SELECT * FROM alunos ORDER BY id DESC");
         }
         public static function search($nome){
             $sql = new Sql();
             return $sql->select("SELECT * FROM alunos WHERE nome LIKE :NOME", arraY(
                 ":NOME" => "%".$nome."%"
+            ));
+        }
+        public function cadastrar(){
+            $sql = new Sql();
+            $sql->query("INSERT INTO alunos (nome, endereco, bairro)
+            VALUES (:NOME, :ENDERECO, :BAIRRO)",array(
+                ":NOME" => $this->getNome(),
+                ":ENDERECO" => $this->getEndereco(),
+                ":BAIRRO" => $this->getBairro(),
+            ));
+        }
+        public function salvar($id){
+            $sql = new Sql();
+            $sql->query("UPDATE alunos SET nome=:NOME, endereco=:ENDERECO, bairro=:BAIRRO
+             WHERE id=:ID",array(
+                ":NOME" => $this->getNome(),
+                ":ENDERECO" => $this->getEndereco(),
+                ":BAIRRO" => $this->getBairro(),
+                ":ID" => $id,
             ));
         }
         public function __toString(){
