@@ -37,6 +37,16 @@
                 $this->setBairro($row['bairro']);
             }
         }
+        public static function getList(){
+            $sql = new Sql();
+            return $sql->select("SELECT * FROM alunos ORDER BY nome DESC");
+        }
+        public static function search($nome){
+            $sql = new Sql();
+            return $sql->select("SELECT * FROM alunos WHERE nome LIKE :NOME", arraY(
+                ":NOME" => "%".$nome."%"
+            ));
+        }
         public function __toString(){
             return json_encode(array(
                 "nome" => $this->getNome(),
